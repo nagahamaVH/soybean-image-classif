@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+    jupyter:
+        container_name: soybean_image_classif
+        user: ${CURRENT_UID}
+        build:
+            context: ./containers
+            dockerfile: Dockerfile
+        ports:
+            - 9999:9999
+            - 5000:5000
+        stdin_open: true
+        tty: true
+        runtime: nvidia
+        deploy:
+            resources:
+                limits:
+                    memory: 20G
+        volumes:
+            - ./runtime:/notebook:rw
+            - ./app:/notebook/workspace:rw
+
